@@ -834,7 +834,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
           <a href="#expertises">Nos expertises</a>
           <a href="#tournee">Tournée nationale</a>
           <a href="#galerie">Galerie</a>
-          <a href="#verifier">Vérifier une attestation</a>
           <a href="#contact">Contact</a>
         </div>
       </div>
@@ -1260,25 +1259,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
   </div>
 </section>
 
-<section class="verify" id="verifier">
-  <div class="wrap verify-grid">
-    <div>
-      <span class="eyebrow on-dark">Confiance &amp; transparence</span>
-      <h2>Vérifier l'authenticité d'une attestation.</h2>
-      <p class="lead">Chaque attestation EFA porte un numéro unique et un QR code. Entrez le numéro pour confirmer instantanément sa validité — utile pour les écoles, employeurs et partenaires.</p>
-    </div>
-    <div class="verify-box">
-      <label for="attestation-input">Numéro d'attestation</label>
-      <div class="verify-row">
-        <input id="attestation-input" type="text" placeholder="Ex. EFA-2026-KD-00842">
-        <button id="verify-btn">Vérifier</button>
-      </div>
-      <div class="verify-result" id="verify-result"></div>
-      <p class="verify-hint">Prototype de démonstration — la vérification réelle interrogera la base de données EFA au lancement.</p>
-    </div>
-  </div>
-</section>
-
 <section class="testi">
   <div class="wrap">
     <div class="section-head center" style="margin-left:auto; margin-right:auto;">
@@ -1367,7 +1347,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
           <li><a href="#mission">Qui sommes-nous</a></li>
           <li><a href="#expertises">Nos expertises</a></li>
           <li><a href="#tournee">Tournée nationale</a></li>
-          <li><a href="#verifier">Vérifier une attestation</a></li>
           <li class="foot-soon">Actualités <span class="soon-badge">Bientôt</span></li>
         </ul>
       </div>
@@ -1539,22 +1518,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
   }, { threshold: 0.4 });
   counters.forEach(c => counterObserver.observe(c));
 
-  // Attestation verification demo
-  const verifyBtn = document.getElementById('verify-btn');
-  const verifyInput = document.getElementById('attestation-input');
-  const verifyResult = document.getElementById('verify-result');
-  verifyBtn.addEventListener('click', () => {
-    const val = verifyInput.value.trim();
-    verifyResult.classList.remove('valid','invalid','show');
-    if (!val) return;
-    const isValid = /^EFA-\d{4}-[A-Z]{2}-\d+$/i.test(val);
-    verifyResult.textContent = isValid
-      ? '✓ Attestation valide — délivrée par EFA et authentique.'
-      : '✕ Aucune attestation trouvée avec ce numéro. Vérifiez la saisie.';
-    verifyResult.classList.add(isValid ? 'valid' : 'invalid', 'show');
-  });
-  verifyInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') verifyBtn.click(); });
-
   // Marketplace filtering (category tabs + audience chips)
   const mpCards = Array.from(document.querySelectorAll('.mp-card'));
   const mpTabs = document.querySelectorAll('.mp-tab');
@@ -1661,7 +1624,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
   var stops = [
     ['top', 'Accueil', null], ['mission', 'Qui sommes-nous', '#mission'], ['programmes', 'Programmes', '#programmes'],
     ['tournee', 'Tournée nationale', '#tournee'], ['club', 'Club des Leaders', '#club'], ['expertises', 'Expertises', '#expertises'],
-    ['marketplace', 'Marketplace', '#marketplace'], ['galerie', 'Galerie', '#galerie'], ['verifier', 'Vérifier une attestation', '#verifier'],
+    ['marketplace', 'Marketplace', '#marketplace'], ['galerie', 'Galerie', '#galerie'],
     ['contact', 'Contact', '#contact']
   ];
   var ul = d.createElement('ul'); ul.id = 'uxDots'; ul.setAttribute('aria-label', 'Repères de la page');
