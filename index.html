@@ -698,6 +698,118 @@
     *{animation:none !important; transition:none !important;}
   }
 </style>
+<meta name="theme-color" content="#0A1B33">
+<style id="ux-enhance">
+/* ===== EFA — couche d'expérience (ajout uniquement, aucun contenu retiré) ===== */
+
+/* --- Corrections mobile --- */
+.verify-grid > *, .siege-grid > *, .hero-grid > *, .mission-grid > *, .club-grid > *, .tournee-grid > * { min-width:0; }
+.verify-row { flex-wrap:wrap; }
+.verify-row input { min-width:0; flex:1 1 200px; }
+.verify-row button { padding:14px 24px; }
+.mp-grid { grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); }
+@media (max-width:960px){
+  .siege-grid { grid-template-columns:1fr; gap:32px; }
+}
+@media (max-width:600px){
+  .hero-art .badge { left:10px; }
+  .hero-art .frame { max-width:320px; }
+  .hero-art .halo { width:340px; height:340px; }
+}
+
+/* --- Pastille numérotée de EFA Academy : ne recouvre plus le titre --- */
+.program-card:not(:has(> .thumb)) .step-num { top:30px; left:26px; }
+.program-card:not(:has(> .thumb)) > h3 { padding-left:46px; }
+
+/* --- Barre de progression de lecture --- */
+#uxProgress { position:fixed; top:0; left:0; width:100%; height:3px; z-index:300; pointer-events:none;
+  transform-origin:0 50%; transform:scaleX(0); background:linear-gradient(90deg, var(--gold), var(--gold-light)); }
+
+/* --- Pastille KAMARIA dans l'accueil --- */
+.hero-promo { display:inline-flex; align-items:center; gap:10px; margin-bottom:22px; padding:9px 18px 9px 14px;
+  border-radius:999px; border:1px solid rgba(233,210,140,0.55); background:rgba(201,162,75,0.12);
+  color:var(--gold-light); font-size:13.5px; font-weight:600; letter-spacing:.01em; transition:background .25s, transform .25s, border-color .25s; }
+.hero-promo:hover { background:rgba(201,162,75,0.22); border-color:var(--gold-light); transform:translateY(-2px); }
+.hero-promo .pulse { width:9px; height:9px; border-radius:50%; background:#3fae5c; box-shadow:0 0 0 0 rgba(63,174,92,.6); animation:uxPulse 2s infinite; flex-shrink:0; }
+.hero-promo .arr { transition:transform .25s; }
+.hero-promo:hover .arr { transform:translateX(4px); }
+@keyframes uxPulse { 0%{box-shadow:0 0 0 0 rgba(63,174,92,.55);} 70%{box-shadow:0 0 0 10px rgba(63,174,92,0);} 100%{box-shadow:0 0 0 0 rgba(63,174,92,0);} }
+
+/* --- Mouvement d'ambiance (accueil) --- */
+.hero-art .halo { animation:uxBreath 7s ease-in-out infinite; }
+.hero-art .badge { animation:uxFloat 5.5s ease-in-out infinite; }
+@keyframes uxBreath { 0%,100%{transform:scale(1); opacity:.9;} 50%{transform:scale(1.12); opacity:1;} }
+@keyframes uxFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-7px);} }
+
+/* --- Apparition au défilement --- */
+.js .rv { opacity:0; transform:translateY(30px); transition:opacity .85s cubic-bezier(.2,.7,.2,1) var(--d,0ms), transform .85s cubic-bezier(.2,.7,.2,1) var(--d,0ms); }
+.js .rv.in { opacity:1; transform:none; }
+
+/* --- Cartes vivantes --- */
+.js .rv.in.value-card:hover, .js .rv.in.exp-card:hover, .js .rv.in.program-card:hover, .js .rv.in.testi-card:hover,
+.js .rv.in.club-item:hover, .js .rv.in.siege-pillar:hover, .js .rv.in.hiw-step:hover, .js .rv.in.tour-row:hover {
+  transform:translateY(-6px); transition:transform .3s ease, box-shadow .3s ease, opacity .3s; }
+.value-card:hover, .exp-card:hover, .program-card:hover, .testi-card:hover, .club-item:hover { box-shadow:0 26px 50px -22px rgba(10,27,51,.35); }
+
+/* --- Boutons dorés : reflet au survol --- */
+.btn-gold { position:relative; overflow:hidden; }
+.btn-gold::after { content:""; position:absolute; top:0; left:-130%; width:55%; height:100%;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent); transform:skewX(-20deg); transition:left .7s ease; pointer-events:none; }
+.btn-gold:hover::after { left:150%; }
+.btn:hover { transform:translateY(-2px); }
+
+/* --- Navigation : section active --- */
+.nav-links a { position:relative; }
+.nav-links > a.active { color:var(--gold-light); }
+.nav-links > a.active::after { content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; background:var(--gold); border-radius:2px; }
+@media (max-width:960px){ .nav-links > a.active::after { display:none; } }
+
+/* --- Repères latéraux (écrans larges) --- */
+#uxDots { position:fixed; right:18px; top:50%; transform:translateY(-50%); z-index:90; display:none; flex-direction:column; gap:14px;
+  list-style:none; opacity:0; pointer-events:none; transition:opacity .4s; }
+#uxDots.show { opacity:1; pointer-events:auto; }
+#uxDots a { position:relative; display:block; width:12px; height:12px; border-radius:50%; background:var(--navy-deep); border:2px solid var(--gold); transition:transform .25s, background .25s; }
+#uxDots a:hover, #uxDots a.active { background:var(--gold); transform:scale(1.35); }
+#uxDots a::before { content:attr(data-label); position:absolute; right:24px; top:50%; transform:translateY(-50%) translateX(6px);
+  background:var(--navy-deep); color:var(--white); font-size:12px; font-weight:600; padding:5px 11px; border-radius:6px; white-space:nowrap;
+  border:1px solid var(--navy-line); opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; }
+#uxDots a:hover::before { opacity:1; transform:translateY(-50%) translateX(0); }
+@media (min-width:1200px){ #uxDots { display:flex; } }
+
+/* --- Boutons flottants : WhatsApp et retour en haut --- */
+.ux-fab { position:fixed; right:22px; bottom:22px; z-index:120; display:flex; flex-direction:column; align-items:flex-end; gap:12px;
+  opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .35s, transform .35s; }
+.ux-fab.show { opacity:1; transform:none; pointer-events:auto; }
+.ux-fab .wa { display:inline-flex; align-items:center; gap:10px; background:#25be5a; color:#fff; font-weight:700; font-size:14px;
+  padding:13px 20px 13px 16px; border-radius:999px; box-shadow:0 14px 30px -10px rgba(37,190,90,.65); transition:transform .25s, box-shadow .25s; }
+.ux-fab .wa:hover { transform:translateY(-3px); box-shadow:0 20px 36px -10px rgba(37,190,90,.8); }
+.ux-fab .wa svg { width:22px; height:22px; flex-shrink:0; }
+.ux-fab .top { width:44px; height:44px; border-radius:50%; background:var(--navy-deep); color:var(--gold-light); border:1px solid var(--navy-line);
+  display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 10px 24px -10px rgba(0,0,0,.5); transition:transform .25s, border-color .25s; }
+.ux-fab .top:hover { transform:translateY(-3px); border-color:var(--gold); }
+
+/* --- Barre d'action mobile --- */
+.ux-mbar { display:none; }
+@media (max-width:768px){
+  .ux-fab { display:none; }
+  .ux-mbar { position:fixed; left:0; right:0; bottom:0; z-index:130; display:flex; gap:10px; padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    background:rgba(10,27,51,.94); backdrop-filter:blur(10px); border-top:1px solid var(--navy-line);
+    transform:translateY(110%); transition:transform .35s ease; }
+  .ux-mbar.show { transform:none; }
+  .ux-mbar .btn { flex:1; padding:13px 10px; font-size:14.5px; }
+  .ux-mbar .wa { background:#25be5a; color:#fff; gap:8px; }
+  .ux-mbar .wa svg { width:20px; height:20px; }
+  footer.site { padding-bottom:calc(var(--mbar-pad, 0px) + 80px); }
+}
+
+/* --- Accessibilité : focus visible --- */
+a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline:3px solid var(--gold-light); outline-offset:3px; border-radius:6px; }
+
+@media (prefers-reduced-motion: reduce){
+  .js .rv { opacity:1 !important; transform:none !important; }
+  #uxProgress { display:none; }
+}
+</style>
 </head>
 <body>
 
@@ -746,6 +858,8 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
+      <a class="hero-promo" href="#kamaria"><span class="pulse" aria-hidden="true"></span>Grand Rendez-vous Éducatif KAMARIA — inscriptions ouvertes <span class="arr" aria-hidden="true">→</span></a>
+      <br>
       <span class="eyebrow on-dark">Éducation financière · Leadership · Burkina Faso et au-delà</span>
       <h1>Préparer aujourd'hui<br>les <em>leaders responsables</em><br>de demain.</h1>
       <p class="lead">EFA accompagne les enfants, les jeunes et les adultes dans le développement du leadership, de l'éducation financière et des compétences essentielles pour réussir dans le monde moderne.</p>
@@ -1274,6 +1388,15 @@
   </div>
 </footer>
 
+<div class="ux-fab" aria-label="Actions rapides">
+  <a class="wa" href="https://wa.me/22668787070" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.2 2 11.4c0 2.2.8 4.2 2.2 5.8L3 22l5-1.6c1 .4 2.1.6 3.2.6 5.5 0 10-4.2 10-9.4S17.5 2 12 2z"/></svg>Nous écrire</a>
+  <button type="button" class="top" aria-label="Retour en haut de la page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 15l6-6 6 6"/></svg></button>
+</div>
+<div class="ux-mbar">
+  <a class="btn btn-gold" href="#inscription">S'inscrire</a>
+  <a class="btn wa" href="https://wa.me/22668787070" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.2 2 11.4c0 2.2.8 4.2 2.2 5.8L3 22l5-1.6c1 .4 2.1.6 3.2.6 5.5 0 10-4.2 10-9.4S17.5 2 12 2z"/></svg>WhatsApp</a>
+</div>
+
 <script>
   // Robust in-page anchor navigation (recomputes target position at click time,
   // so it isn't thrown off by images still loading / layout shifting)
@@ -1506,6 +1629,93 @@
       panel.classList.toggle('open', !isOpen);
     });
   });
+</script>
+<script id="ux-enhance-js">
+/* EFA — couche d'expérience : apparitions, progression, repères, boutons flottants */
+(function () {
+  var d = document, root = d.documentElement;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.classList.add('js');
+
+  /* 1. Apparition progressive des blocs au défilement */
+  var sel = '.section-head, .hiw-step, .value-card, .program-card, .tour-row, .map-box, .club-card, .club-item, .exp-card, .mp-card, ' +
+            '.gallery-grid > *, .siege-art, .siege-pillar, .verify-box, .testi-card, .logo-chip, .mission-grid > *, .cta .wrap > *';
+  var els = [].slice.call(d.querySelectorAll(sel));
+  els.forEach(function (el) {
+    el.classList.add('rv');
+    var p = el.parentElement, idx = p ? [].indexOf.call(p.children, el) : 0;
+    el.style.setProperty('--d', (idx % 6) * 90 + 'ms');
+  });
+  if (reduce || !('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* 2. Éléments ajoutés : barre de progression, repères latéraux */
+  var bar = d.createElement('div'); bar.id = 'uxProgress'; d.body.appendChild(bar);
+
+  var stops = [
+    ['top', 'Accueil', null], ['mission', 'Qui sommes-nous', '#mission'], ['programmes', 'Programmes', '#programmes'],
+    ['tournee', 'Tournée nationale', '#tournee'], ['club', 'Club des Leaders', '#club'], ['expertises', 'Expertises', '#expertises'],
+    ['marketplace', 'Marketplace', '#marketplace'], ['galerie', 'Galerie', '#galerie'], ['verifier', 'Vérifier une attestation', '#verifier'],
+    ['contact', 'Contact', '#contact']
+  ];
+  var ul = d.createElement('ul'); ul.id = 'uxDots'; ul.setAttribute('aria-label', 'Repères de la page');
+  stops.forEach(function (s) {
+    var li = d.createElement('li'), a = d.createElement('a');
+    a.href = s[2] || '#'; a.setAttribute('data-label', s[1]); a.setAttribute('aria-label', s[1]); a.setAttribute('data-id', s[0]);
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var t = s[0] === 'top' ? null : d.getElementById(s[0]);
+      var y = t ? t.getBoundingClientRect().top + window.scrollY - 70 : 0;
+      window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    });
+    li.appendChild(a); ul.appendChild(li);
+  });
+  d.body.appendChild(ul);
+
+  /* 3. Défilement : progression, section active, parallaxe, boutons flottants */
+  var dots = [].slice.call(ul.querySelectorAll('a'));
+  var navLinks = [].slice.call(d.querySelectorAll('.nav-links > a[href^="#"]'));
+  var fab = d.querySelector('.ux-fab'), mbar = d.querySelector('.ux-mbar');
+  var art = d.querySelector('.hero-art .frame'), halo = d.querySelector('.hero-art .halo');
+  var footer = d.querySelector('footer.site'), ticking = false;
+
+  function update() {
+    ticking = false;
+    var y = window.scrollY, h = root.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, y / h) : 0) + ')';
+
+    var cur = 'top', line = window.innerHeight * 0.38;
+    stops.forEach(function (s) {
+      if (s[0] === 'top') return;
+      var el = d.getElementById(s[0]);
+      if (el && el.getBoundingClientRect().top <= line) cur = s[0];
+    });
+    dots.forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-id') === cur); });
+    navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+    ul.classList.toggle('show', y > 500);
+
+    var showF = y > 600, nearFoot = footer && footer.getBoundingClientRect().top < window.innerHeight - 40;
+    if (fab) fab.classList.toggle('show', showF);
+    if (mbar) mbar.classList.toggle('show', showF && !nearFoot);
+
+    if (!reduce && art && y < 1200 && window.innerWidth > 960) {
+      art.style.transform = 'translateY(' + (y * 0.06).toFixed(1) + 'px)';
+      if (halo) halo.style.marginTop = (y * 0.03).toFixed(1) + 'px';
+    }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  var topBtn = d.querySelector('.ux-fab .top');
+  if (topBtn) topBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+})();
 </script>
 </body>
 </html>
