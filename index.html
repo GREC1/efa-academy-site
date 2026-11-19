@@ -889,6 +889,30 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
 
 @media (prefers-reduced-motion: reduce){ #particles { display:none; } .hero::before { display:none; } }
 </style>
+<style id="ux-trophees">
+.trophees{background:linear-gradient(165deg,#0A1B33 0%,#0d2143 60%,#123156 100%); position:relative; overflow:hidden; color:#fff;}
+.trophees::before{content:""; position:absolute; width:620px; height:620px; border-radius:50%; right:-160px; top:-200px; background:radial-gradient(circle,rgba(201,162,75,.2),transparent 65%); pointer-events:none;}
+.trophees .section-head h2{color:#fff;} .trophees .section-head p{color:rgba(255,255,255,.74);}
+.tro-grid{display:grid; grid-template-columns:1fr 1fr; gap:34px; max-width:980px; margin:0 auto; position:relative;}
+.tro-card{margin:0; position:relative; border-radius:22px; padding:8px; background:linear-gradient(145deg,var(--gold-light),var(--gold) 45%,#8a6a25); box-shadow:0 30px 60px -28px rgba(0,0,0,.7); transition:transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s;}
+.tro-card:hover{transform:translateY(-8px) rotate(-.4deg); box-shadow:0 42px 70px -26px rgba(201,162,75,.45);}
+.tro-card:nth-child(2):hover{transform:translateY(-8px) rotate(.4deg);}
+.tro-btn{display:block; width:100%; padding:0; border:0; background:none; cursor:zoom-in; border-radius:15px; overflow:hidden; position:relative;}
+.tro-btn img{display:block; width:100%; height:auto; border-radius:15px;}
+.tro-btn::after{content:""; position:absolute; top:-10%; bottom:-10%; left:-70%; width:30%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent); transform:skewX(-18deg); animation:troSweep 7s ease-in-out infinite; pointer-events:none;}
+.tro-card:nth-child(2) .tro-btn::after{animation-delay:3.5s;}
+@keyframes troSweep{0%,60%{left:-70%;}90%,100%{left:150%;}}
+.tro-zoom{position:absolute; right:18px; bottom:18px; width:40px; height:40px; border-radius:50%; background:rgba(10,27,51,.82); color:var(--gold-light); display:flex; align-items:center; justify-content:center; font-size:20px; pointer-events:none; backdrop-filter:blur(4px);}
+.tro-card figcaption{padding:14px 10px 8px; text-align:center; color:var(--navy-deep); font-weight:700; font-size:15px;}
+.tro-card figcaption small{display:block; font-weight:500; font-size:12.5px; opacity:.8; margin-top:2px;}
+.tro-cta{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:46px; position:relative;}
+.tro-cta .btn-ghost{border:1.5px solid rgba(255,255,255,.35); color:#fff;} .tro-cta .btn-ghost:hover{background:rgba(255,255,255,.1);}
+.tro-lb{position:fixed; inset:0; z-index:200; background:rgba(5,12,25,.92); display:none; align-items:center; justify-content:center; padding:24px; cursor:zoom-out;}
+.tro-lb.open{display:flex;} .tro-lb img{max-width:min(94vw,820px); max-height:90vh; border-radius:14px; box-shadow:0 30px 80px rgba(0,0,0,.6);}
+@media (max-width:760px){.tro-grid{grid-template-columns:1fr; gap:26px; max-width:440px;} .tro-cta .btn{width:100%; justify-content:center;}}
+@media (prefers-reduced-motion:reduce){.tro-btn::after{display:none;} .tro-card:hover{transform:none;}}
+.js .rv.in.tro-card:hover{transform:translateY(-8px) rotate(-.4deg);} .js .rv.in.tro-card:nth-child(2):hover{transform:translateY(-8px) rotate(.4deg);}
+</style>
 </head>
 <body>
 
@@ -1146,6 +1170,37 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
     </div>
   </div>
 </section>
+
+<section class="trophees" id="trophees">
+  <div class="wrap">
+    <div class="section-head center">
+      <span class="eyebrow on-dark">Concours KAMARIA</span>
+      <h2>Un trophée à décrocher dans chaque région.</h2>
+      <p>Le Grand Rendez-vous Éducatif KAMARIA couronne les esprits éclairés. Découvrez les trophées prestigieux du Kadiogo et du Guiriko, et inscrivez votre enfant dès maintenant.</p>
+    </div>
+    <div class="tro-grid">
+      <figure class="tro-card rv">
+        <button type="button" class="tro-btn" data-full="images/kamaria-trophee-kadiogo.jpg" aria-label="Agrandir l'affiche du Trophée KAMARIA du Kadiogo">
+          <img src="images/kamaria-trophee-kadiogo.webp" width="1000" height="1125" loading="lazy" decoding="async" alt="Affiche du prestigieux Trophée KAMARIA du Kadiogo, tenu par une hôtesse EFA Academy">
+          <span class="tro-zoom" aria-hidden="true">+</span>
+        </button>
+        <figcaption>Trophée KAMARIA du Kadiogo<small>Région du Kadiogo · Ouagadougou</small></figcaption>
+      </figure>
+      <figure class="tro-card rv">
+        <button type="button" class="tro-btn" data-full="images/kamaria-trophee-guiriko.jpg" aria-label="Agrandir l'affiche du Trophée KAMARIA de la région du Guiriko">
+          <img src="images/kamaria-trophee-guiriko.webp" width="1000" height="1095" loading="lazy" decoding="async" alt="Affiche du prestigieux Trophée KAMARIA de la région du Guiriko, célébré par des enfants">
+          <span class="tro-zoom" aria-hidden="true">+</span>
+        </button>
+        <figcaption>Trophée KAMARIA du Guiriko<small>Région du Guiriko · Haut-Bassin</small></figcaption>
+      </figure>
+    </div>
+    <div class="tro-cta">
+      <a href="#kamaria" class="btn btn-gold">Inscrire mon enfant</a>
+      <a href="#tournee" class="btn btn-ghost">Voir les régions et les dates</a>
+    </div>
+  </div>
+</section>
+<div class="tro-lb" id="troLb" role="dialog" aria-modal="true" aria-label="Affiche agrandie"><img alt=""></div>
 
 <section class="tournee" id="tournee">
   <div class="wrap">
@@ -1677,7 +1732,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
 
   /* 1. Apparition progressive des blocs au défilement */
   var sel = '.section-head, .hiw-step, .value-card, .program-card, .tour-row, .map-box, .club-card, .club-item, .exp-card, .mp-card, ' +
-            '.gallery-grid > *, .siege-art, .siege-pillar, .verify-box, .testi-card, .logo-chip, .mission-grid > *, .cta .wrap > *';
+            '.gallery-grid > *, .siege-art, .siege-pillar, .tro-card, .tro-cta, .testi-card, .logo-chip, .mission-grid > *, .cta .wrap > *';
   var els = [].slice.call(d.querySelectorAll(sel));
   els.forEach(function (el) {
     el.classList.add('rv');
@@ -1818,6 +1873,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
     [].forEach.call(svg.querySelectorAll('.stop-ring'), function (r, i) { r.style.animationDelay = (i * 0.5) + 's'; });
   }
 })();
+</script>
+<script id="trophees-js">
+(function(){var lb=document.getElementById('troLb');if(!lb)return;var im=lb.querySelector('img');
+function close(){lb.classList.remove('open');im.removeAttribute('src');}
+[].forEach.call(document.querySelectorAll('.tro-btn'),function(b){b.addEventListener('click',function(){im.src=b.getAttribute('data-full');im.alt=b.querySelector('img').alt;lb.classList.add('open');});});
+lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();
 </script>
 </body>
 </html>
