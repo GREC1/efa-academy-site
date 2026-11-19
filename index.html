@@ -913,6 +913,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
 @media (prefers-reduced-motion:reduce){.tro-btn::after{display:none;} .tro-card:hover{transform:none;}}
 .js .rv.in.tro-card:hover{transform:translateY(-8px) rotate(-.4deg);} .js .rv.in.tro-card:nth-child(2):hover{transform:translateY(-8px) rotate(.4deg);}
 </style>
+<style id="ux-sparkle">
+/* Étincelles d'espoir : petites étoiles dorées qui scintillent doucement */
+.ux-spark{position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0;}
+.ux-spark i{position:absolute; width:var(--s,14px); height:var(--s,14px); opacity:0; transform:scale(.2) rotate(0deg);
+  background:radial-gradient(circle,#fff 0 8%,rgba(255,236,170,.95) 9% 14%,transparent 15%),
+             linear-gradient(#fff0,#ffe9a8 50%,#fff0) center/2px 100% no-repeat,
+             linear-gradient(90deg,#fff0,#ffe9a8 50%,#fff0) center/100% 2px no-repeat;
+  filter:drop-shadow(0 0 5px rgba(233,210,140,.9)); animation:uxTw var(--t,4.5s) ease-in-out var(--d,0s) infinite;}
+.light-spark i{filter:drop-shadow(0 0 3px rgba(201,162,75,.8)); background:radial-gradient(circle,#e0b64f 0 10%,rgba(201,162,75,.9) 11% 16%,transparent 17%),
+             linear-gradient(#fff0,#c9a24b 50%,#fff0) center/2px 100% no-repeat,linear-gradient(90deg,#fff0,#c9a24b 50%,#fff0) center/100% 2px no-repeat;}
+@keyframes uxTw{0%,100%{opacity:0; transform:scale(.2) rotate(0deg);} 45%{opacity:1; transform:scale(1) rotate(45deg);} 60%{opacity:.85; transform:scale(.85) rotate(60deg);}}
+/* Titres : petit éclat doré sur le mot d'accent des sections sombres */
+.hero h1::after{content:"✦"; display:inline-block; margin-left:.25em; font-size:.4em; vertical-align:top; color:var(--gold-light); animation:uxTw 3.8s ease-in-out infinite; filter:drop-shadow(0 0 6px rgba(233,210,140,.9));}
+@media (prefers-reduced-motion:reduce){.ux-spark{display:none;} .hero h1::after{animation:none; opacity:1;}}
+</style>
 </head>
 <body>
 
@@ -1879,6 +1894,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
 function close(){lb.classList.remove('open');im.removeAttribute('src');}
 [].forEach.call(document.querySelectorAll('.tro-btn'),function(b){b.addEventListener('click',function(){im.src=b.getAttribute('data-full');im.alt=b.querySelector('img').alt;lb.classList.add('open');});});
 lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();
+</script>
+<script id="ux-sparkle-js">
+(function(){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var mob=innerWidth<700, seed=7;
+  function r(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+  var dark=['hero','trophees','club','cta','marketplace','expertises','footer'];
+  [].forEach.call(document.querySelectorAll('section, footer'),function(sec){
+    var isDark=dark.some(function(c){return sec.classList.contains(c)||sec.tagName.toLowerCase()===c;});
+    var cs=getComputedStyle(sec); if(cs.position==='static')sec.style.position='relative';
+    var box=document.createElement('div'); box.className='ux-spark'+(isDark?'':' light-spark'); box.setAttribute('aria-hidden','true');
+    var n=isDark?(mob?7:14):(mob?3:6);
+    for(var k=0;k<n;k++){var s=document.createElement('i');
+      s.style.left=(r()*96+1).toFixed(1)+'%'; s.style.top=(r()*92+2).toFixed(1)+'%';
+      s.style.setProperty('--s',(13+r()*18).toFixed(0)+'px'); s.style.setProperty('--t',(3.2+r()*3.6).toFixed(1)+'s'); s.style.setProperty('--d',(-r()*6).toFixed(1)+'s');
+      box.appendChild(s);}
+    sec.insertBefore(box,sec.firstChild);
+  });
+})();
 </script>
 </body>
 </html>
