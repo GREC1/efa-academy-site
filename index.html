@@ -810,6 +810,85 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
   #uxProgress { display:none; }
 }
 </style>
+<style id="ux-life">
+/* ===== EFA — mouvements en boucle (sobres, lents, désactivés si « réduire les animations ») ===== */
+
+/* Accueil : lueur dorée qui dérive, titre qui scintille doucement, visuel qui flotte */
+.hero::before { content:""; position:absolute; width:720px; height:720px; border-radius:50%; left:-12%; top:8%; z-index:0; pointer-events:none;
+  background:radial-gradient(circle, rgba(201,162,75,.16), transparent 65%); animation:uxDrift 20s ease-in-out infinite alternate; }
+@keyframes uxDrift { from{ transform:translate(0,0) scale(1);} to{ transform:translate(38vw,10vh) scale(1.25);} }
+
+.hero h1 em { background:linear-gradient(100deg, var(--gold-light) 0%, #fff4cf 32%, var(--gold-light) 50%, var(--gold) 100%);
+  background-size:230% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+  animation:uxShimmer 7s ease-in-out infinite; }
+@keyframes uxShimmer { 0%,100%{ background-position:100% 0;} 50%{ background-position:0 0;} }
+
+.hero-art .frame { overflow:hidden; }
+.hero-art .frame img { animation:uxFloatS 7s ease-in-out infinite; }
+.hero-art .frame::after { content:""; position:absolute; top:-20%; bottom:-20%; left:-60%; width:35%; pointer-events:none;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.16), transparent); transform:skewX(-18deg); animation:uxSweep 8s ease-in-out infinite; }
+@keyframes uxSweep { 0%,55%{ left:-60%;} 85%,100%{ left:140%;} }
+@keyframes uxFloatS { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+
+#particles { position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; }
+
+/* Appels à l'action : respiration douce + reflet périodique */
+.hero-ctas .btn-gold { animation:uxCta 4.2s ease-in-out infinite; }
+@keyframes uxCta { 0%,62%,100%{ box-shadow:0 10px 24px -8px rgba(201,162,75,.6), 0 0 0 0 rgba(233,210,140,0);}
+  78%{ box-shadow:0 10px 24px -8px rgba(201,162,75,.6), 0 0 0 0 rgba(233,210,140,.5);} 100%{ box-shadow:0 10px 24px -8px rgba(201,162,75,.6), 0 0 0 18px rgba(233,210,140,0);} }
+.hero-ctas .btn-gold::after, .club-card .btn-gold::after, .cta .btn-gold::after { animation:uxBtnSweep 7s ease-in-out infinite; }
+@keyframes uxBtnSweep { 0%,70%{ left:-130%;} 92%,100%{ left:150%;} }
+
+/* Comment ça marche : les 4 étapes s'allument tour à tour, un trait lumineux relie le parcours */
+.hiw-num { animation:uxStep 9s ease-in-out infinite; }
+.hiw-step:nth-child(2) .hiw-num { animation-delay:2.2s; }
+.hiw-step:nth-child(3) .hiw-num { animation-delay:4.4s; }
+.hiw-step:nth-child(4) .hiw-num { animation-delay:6.6s; }
+@keyframes uxStep { 0%{ box-shadow:0 0 0 0 rgba(201,162,75,0); background:var(--white);}
+  6%{ box-shadow:0 0 0 8px rgba(201,162,75,.28); background:var(--gold-light);}
+  22%{ box-shadow:0 0 0 20px rgba(201,162,75,0); background:var(--white);} 100%{ box-shadow:0 0 0 0 rgba(201,162,75,0); background:var(--white);} }
+.hiw-line { overflow:hidden; }
+.hiw-line::after { content:""; position:absolute; top:0; left:-30%; width:30%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(201,162,75,1), transparent); animation:uxLine 5s linear infinite; }
+@keyframes uxLine { to{ left:100%; } }
+
+/* Tournée nationale : étapes qui pulsent, parcours animé, voyants « places ouvertes » */
+.bf-map .stop-ring { transform-box:fill-box; transform-origin:center; animation:uxRing 3.2s ease-out infinite; }
+@keyframes uxRing { 0%{ transform:scale(.55); opacity:.9;} 70%,100%{ transform:scale(1.45); opacity:0;} }
+.bf-map .ux-route { fill:none; stroke:var(--gold); stroke-width:1.6; stroke-dasharray:5 6; stroke-linecap:round; opacity:.8; animation:uxDash 2.4s linear infinite; }
+@keyframes uxDash { to{ stroke-dashoffset:-22; } }
+.tour-row .city .pin { animation:uxPin 2.6s ease-in-out infinite; }
+.tour-row:nth-child(2) .pin { animation-delay:.4s; } .tour-row:nth-child(3) .pin { animation-delay:.8s; } .tour-row:nth-child(4) .pin { animation-delay:1.2s; }
+@keyframes uxPin { 0%,100%{ box-shadow:0 0 0 0 rgba(201,162,75,.55);} 60%{ box-shadow:0 0 0 7px rgba(201,162,75,0);} }
+
+/* Club : badge qui flotte, halo qui respire */
+.club-card .badge-img { animation:uxFloatS 6s ease-in-out infinite; }
+.club-card::after { animation:uxBreath2 6s ease-in-out infinite; }
+@keyframes uxBreath2 { 0%,100%{ opacity:.75; transform:scale(1);} 50%{ opacity:1; transform:scale(1.18);} }
+
+/* Marketplace : halo doré qui respire */
+.marketplace::before { animation:uxGlow 8s ease-in-out infinite; }
+@keyframes uxGlow { 0%,100%{ opacity:.55;} 50%{ opacity:1;} }
+
+/* Galerie : zoom très lent façon documentaire */
+.gallery-grid img { animation:uxKen 18s ease-in-out infinite alternate; }
+.gallery-grid figure:nth-child(2) img { animation-delay:-6s; }
+.gallery-grid figure:nth-child(3) img { animation-delay:-12s; }
+@keyframes uxKen { from{ scale:1;} to{ scale:1.08;} }
+
+/* Témoignages : une carte à la fois s'illumine */
+.testi-card { animation:uxCardGlow 9s ease-in-out infinite; }
+.testi-card:nth-child(2) { animation-delay:3s; } .testi-card:nth-child(3) { animation-delay:6s; }
+@keyframes uxCardGlow { 0%,100%{ border-color:var(--cream-line); box-shadow:0 0 0 0 rgba(201,162,75,0);}
+  12%,26%{ border-color:rgba(201,162,75,.7); box-shadow:0 18px 40px -20px rgba(201,162,75,.55);} 40%{ border-color:var(--cream-line); box-shadow:0 0 0 0 rgba(201,162,75,0);} }
+
+/* WhatsApp flottant : discrète onde de rappel */
+.ux-fab .wa { animation:uxWa 4.5s ease-out infinite; }
+@keyframes uxWa { 0%,70%,100%{ box-shadow:0 14px 30px -10px rgba(37,190,90,.65), 0 0 0 0 rgba(37,190,90,0);}
+  80%{ box-shadow:0 14px 30px -10px rgba(37,190,90,.65), 0 0 0 0 rgba(37,190,90,.45);} 100%{ box-shadow:0 14px 30px -10px rgba(37,190,90,.65), 0 0 0 18px rgba(37,190,90,0);} }
+
+@media (prefers-reduced-motion: reduce){ #particles { display:none; } .hero::before { display:none; } }
+</style>
 </head>
 <body>
 
@@ -1678,6 +1757,70 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
 
   var topBtn = d.querySelector('.ux-fab .top');
   if (topBtn) topBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+})();
+</script>
+<script id="ux-life-js">
+/* EFA — vie de l'interface : particules dorées discrètes + parcours animé sur la carte */
+(function () {
+  var d = document;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  /* 1. Particules dorées dans l'accueil (s'arrêtent hors écran ou onglet masqué) */
+  var hero = d.querySelector('section.hero');
+  if (hero) {
+    var cv = d.createElement('canvas'); cv.id = 'particles'; cv.setAttribute('aria-hidden', 'true');
+    hero.insertBefore(cv, hero.firstChild);
+    var ctx = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 1.5), P = [], running = false, vis = true;
+    function size() {
+      W = hero.clientWidth; H = hero.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = W < 700 ? 22 : 46; P = [];
+      for (var i = 0; i < n; i++) P.push({ x: Math.random() * W, y: Math.random() * H, r: 0.8 + Math.random() * 1.8,
+        vy: 0.08 + Math.random() * 0.22, ph: Math.random() * 6.28, sw: 0.2 + Math.random() * 0.5, a: 0.25 + Math.random() * 0.45 });
+    }
+    function frame(t) {
+      if (!running) return;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < P.length; i++) {
+        var p = P[i];
+        p.y -= p.vy; p.x += Math.sin(t / 2600 + p.ph) * p.sw * 0.35;
+        if (p.y < -6) { p.y = H + 6; p.x = Math.random() * W; }
+        var tw = 0.55 + 0.45 * Math.sin(t / 1100 + p.ph);
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+        ctx.fillStyle = 'rgba(233,210,140,' + (p.a * tw).toFixed(3) + ')'; ctx.fill();
+        for (var j = i + 1; j < P.length; j++) {
+          var q = P[j], dx = p.x - q.x, dy = p.y - q.y, dist = dx * dx + dy * dy;
+          if (dist < 9600) {
+            ctx.strokeStyle = 'rgba(201,162,75,' + (0.1 * (1 - dist / 9600)).toFixed(3) + ')'; ctx.lineWidth = 0.7;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    function sync() {
+      var should = vis && !d.hidden;
+      if (should && !running) { running = true; requestAnimationFrame(frame); }
+      else if (!should) running = false;
+    }
+    size(); window.addEventListener('resize', size);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; sync(); }).observe(hero);
+    d.addEventListener('visibilitychange', sync); sync();
+  }
+
+  /* 2. Carte : parcours en pointillés + point lumineux qui voyage de ville en ville */
+  var svg = d.querySelector('.bf-map');
+  if (svg) {
+    var NS = 'http://www.w3.org/2000/svg';
+    var route = 'M200 150 L120 110 L150 220 L250 230 L310 190 L280 120 Z';
+    var path = d.createElementNS(NS, 'path'); path.setAttribute('d', route); path.setAttribute('class', 'ux-route');
+    var g = svg.querySelector('g'); svg.insertBefore(path, g);
+    var dot = d.createElementNS(NS, 'circle'); dot.setAttribute('r', '4'); dot.setAttribute('fill', '#E9D28C'); dot.setAttribute('stroke', '#C9A24B'); dot.setAttribute('stroke-width', '1.5');
+    var mo = d.createElementNS(NS, 'animateMotion'); mo.setAttribute('dur', '11s'); mo.setAttribute('repeatCount', 'indefinite'); mo.setAttribute('path', route);
+    dot.appendChild(mo); svg.appendChild(dot);
+    [].forEach.call(svg.querySelectorAll('.stop-ring'), function (r, i) { r.style.animationDelay = (i * 0.5) + 's'; });
+  }
 })();
 </script>
 </body>
